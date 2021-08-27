@@ -1,22 +1,44 @@
 #include<stdio.h>
+#include<string.h>
 
-main() {
-    FILE *f;
+void writeFile() {
+    FILE *currentFile;
     int value;
 
-
-    f = fopen("myfirstfile.txt", "w");
+    currentFile = fopen("myfirstfile.txt", "w");
     
     do {
         printf("Type a number: ");
         scanf("%d", &value);
         if(value !=0) {
-            fprintf(f, "%d\n", value);
+            fprintf(currentFile, "%d\n", value);
         }
     }while(value!=0);
 
-    fclose(f);
+    fclose(currentFile);
 
     printf("The datas were written. Thanks!!!\n\n");
+}
 
+void readFile() {
+    FILE *currentFile;
+    int value;
+
+    currentFile = fopen("myfirstfile.txt", "r");
+
+    if (currentFile == NULL) {
+         printf("File not found\n\n");
+    } else {
+       while(!feof(currentFile)) {
+            fscanf(currentFile, "%d", &value);
+            printf("Value: %d\n", value);
+        }
+        fclose(currentFile);
+    }
+}
+
+main() {
+    
+    writeFile();
+    readFile();
 }
