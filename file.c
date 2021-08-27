@@ -44,7 +44,4 @@ main() {
     
     writeFile();
     readFile();
-
-    int value = 10;
-
 }
