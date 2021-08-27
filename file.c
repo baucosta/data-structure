@@ -29,9 +29,11 @@ void readFile() {
     if (currentFile == NULL) {
          printf("File not found\n\n");
     } else {
-       while(!feof(currentFile)) {
+        while(!feof(currentFile)) {
             fscanf(currentFile, "%d", &value);
-            printf("Value: %d\n", value);
+            if(!feof(currentFile)) {
+                printf("Value: %d\n", value);
+            }
         }
         fclose(currentFile);
     }
@@ -41,4 +43,7 @@ main() {
     
     writeFile();
     readFile();
+
+    int value = 10;
+
 }
