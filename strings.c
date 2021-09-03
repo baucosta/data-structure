@@ -46,4 +46,6 @@ main() {
 
     printf("%s\n", nomeCompleto);
 
+    printf("%d\n", strlen(nomeCompleto));
+
 }
