@@ -10,7 +10,7 @@ struct Pessoa {
 };
 
 void cadastrarPessoa() {
-    struct Pessoa p;
+    struct Pessoa p[10];
 
     printf("Digite um nome: ");
     fgets(p.nome, 30, stdin);
