@@ -1,9 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define MAX 30
+#include<string.h>
+#define MAX 2
 
 struct Employee {
-    char name[MAX];
+    char name[30];
     int age;
     float salary;
 };
@@ -20,35 +21,46 @@ int menu() {
     return op;
 }
 
-int newEmployee(E emp[], int qtde) {
-    printf("Type a name: ");
-    __fpurge(stdin); //fflush(stdin)
-    fgets(emp[qtde].name, MAX, stdin);
-    
-    printf("Type a age: ");
-    scanf("%d", &emp[qtde].age);
-    
-    printf("Type a salary: ");
-    scanf("%f", &emp[qtde].salary);
+void newEmployee(E employees[], int *qtde) {
+    if ((*qtde) == MAX) {
+        printf("\nThe database is full.\n");
+    } else {
+        printf("Type a name: ");
+        __fpurge(stdin); //fflush(stdin)
+        fgets(employees[*qtde].name, 30, stdin);
+        
+        printf("Type a age: ");
+        scanf("%d", &employees[*qtde].age);
+        
+        printf("Type a salary: ");
+        scanf("%f", &employees[*qtde].salary);
 
-    if (emp[qtde].salary <= 0) {
-        return -1;
+        if (employees[*qtde].salary <= 0) {
+            printf("The salary is lower than 500,00");
+        } else {
+            printf("\nThe employee was registered with success\n");
+            (*qtde)++;
+        }
     }
 
-    qtde++;
-
-    return qtde;
 }
 
-void list() {
-    // printf("Employee's datas\n\n");
-    // printf("Name: %s\n", emp.name);
-    // printf("Age: %d\n", emp.age);
-    // printf("Salary: %.2f\n", emp.salary);
+void listAll(E employees[], int qtde) {
+    int i;
+
+    if (qtde == 0) {
+        printf("Nobody is registered");
+    } else {
+        for(i=0; i<qtde; i++) {
+            printf("Name: %s", employees[i].name);
+            printf("Age: %d\n", employees[i].age);
+            printf("Salary: %.2f\n\n", employees[i].salary);
+        }
+    }
 }
 
 main() {
-    E emp[10];
+    E emp[MAX];
     int opc, quantity=0;
 
     do {
@@ -56,12 +68,11 @@ main() {
 
         switch (opc) {
         case 1:
-            quantity = newEmployee(emp, quantity);
-            if (quantity == -1) {
-                printf("There was a fail to register employee");
-            } else {
-                printf("Employee registered with success!!!");
-            }
+            newEmployee(emp, &quantity);
+            break;
+
+        case 2:
+            listAll(emp, quantity);
             break;
 
         case 3:
