@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define MAX 2
+#define MAX 5
 
 struct Employee {
     char name[30];
@@ -14,7 +14,7 @@ int menu() {
     int op;
 
     printf("\n\t#####Employee System####\n\n");
-    printf("1.Add a employee\n2.List all\n3.Sair\n");
+    printf("1.Add a employee\n2.List all\n3.Remove\n4.Quit\n");
     printf("Choose an option: ");
     scanf("%d", &op);
 
@@ -35,7 +35,7 @@ void newEmployee(E employees[], int *qtde) {
         printf("Type a salary: ");
         scanf("%f", &employees[*qtde].salary);
 
-        if (employees[*qtde].salary <= 0) {
+        if (employees[*qtde].salary <= 500) {
             printf("The salary is lower than 500,00");
         } else {
             printf("\nThe employee was registered with success\n");
@@ -59,6 +59,32 @@ void listAll(E employees[], int qtde) {
     }
 }
 
+void delete(E employees[], int *qtde) {
+    char name[30];
+    int i, j;
+
+    if ((*qtde) == 0) {
+        printf("\nNobody is registered.\n");
+    } else {
+        printf("Type the employee to remove: ");
+        __fpurge(stdin);
+        fgets(name, 30, stdin);
+
+        for(i=0; i < (*qtde); i++) {
+            if (strcmp(name, employees[i].name) == 0) {
+                for(j=i; j < (*qtde)-1; j++) {
+                    employees[j] = employees[j+1];
+                }
+                (*qtde)--;
+
+                printf("The employee was remoeved");
+
+                break;
+            }
+        }
+    }
+}
+
 main() {
     E emp[MAX];
     int opc, quantity=0;
@@ -74,8 +100,12 @@ main() {
         case 2:
             listAll(emp, quantity);
             break;
-
+        
         case 3:
+            delete(emp, &quantity);
+            break;
+
+        case 4:
             printf("Saindo...\n\n");
             break;
         
@@ -85,7 +115,7 @@ main() {
         }
 
 
-    }while(opc!=3);
+    }while(opc!=4);
     
 
 }
