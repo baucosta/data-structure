@@ -1,5 +1,5 @@
 #include<stdio.h>
-#define MAX 10
+#define MAX 500
 
 main() {
     int numbers[MAX]={10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
