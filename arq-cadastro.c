@@ -49,17 +49,20 @@ void listAll(Person pes[], int qtde) {
         printf("\n%d", pes[i].idade);
         printf("\n%.2f", pes[i].mensalidade);
     }
+    printf("\n");
 }
 
 void salvar(Person pes[], int qtde) {
     FILE *currentFile;
     int i;
 
+    
     currentFile = fopen("arqcadastro.txt", "w");
     for(i=0;i<qtde;i++) {
-        fprintf(currentFile, "%s\n", pes[i].name);
-        fprintf(currentFile, "%d\n", pes[i].idade);
-        fprintf(currentFile, "%f\n", pes[i].mensalidade);
+        // fprintf(currentFile, "%s\n", pes[i].name);
+        // fprintf(currentFile, "%d\n", pes[i].idade);
+        // fprintf(currentFile, "%f\n", pes[i].mensalidade);
+        fwrite(&pes[i], sizeof(Person), 1, currentFile);
     }
     fclose(currentFile);
 }
@@ -69,14 +72,16 @@ void carregar(Person pes[], int *qtde) {
     int i;
     Person aux;
 
+
     currentFile = fopen("arqcadastro.txt", "r");
      if (currentFile == NULL) {
          printf("File not found\n\n");
     } else {
         while(!feof(currentFile)) {
-            fgets(aux.name, 30, currentFile);
-            fscanf(currentFile, "%d", &aux.idade);
-            fscanf(currentFile, "%.2f", &aux.mensalidade);
+            // fgets(aux.name, 30, currentFile);
+            // fscanf(currentFile, "%d", &aux.idade);
+            // fscanf(currentFile, "%.2f", &aux.mensalidade);
+            fread(&aux, sizeof(Person), 1, currentFile);
             if(!feof(currentFile)) {
                 pes[*qtde] = aux;
                 (*qtde)++;
