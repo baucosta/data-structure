@@ -67,6 +67,23 @@ void salvar(Person pes[], int qtde) {
     fclose(currentFile);
 }
 
+void salvarHtml(Person pes[], int qtde) {
+    FILE *currentFile;
+    int i;
+
+    
+    currentFile = fopen("arqcadastro.html", "w");
+    fprintf(currentFile, "<!DOCTYPE html><html><head><title>My first html</title></head><body>");
+    fprintf(currentFile, "<table border='1'><thead style='background-color: #ff0'><tr><th>Nome</th><th>Idade</th></thead><tbody>");
+    
+    for(i=0;i<qtde;i++) {
+        fprintf(currentFile, "<tr><td>%s</td><td>%d</td>", pes[i].name, pes[i].idade);
+    }
+    fprintf(currentFile, "</tbody></table></body></html");
+
+    fclose(currentFile);
+}
+
 void carregar(Person pes[], int *qtde) {
     FILE *currentFile;
     int i;
@@ -96,6 +113,7 @@ main() {
     Person pes[MAX];
     int opc, qtde=0, i;
 
+
     carregar(pes, &qtde);
     do {
         printf("1.Cadastrar\n2.Listar\n3.Sair\nChoose an option: ");
@@ -113,6 +131,7 @@ main() {
 
          case 3:
             salvar(pes, qtde);
+            salvarHtml(pes, qtde);
             printf("Saindo...\n");
             break;
         
