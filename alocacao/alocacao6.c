@@ -1,22 +1,52 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+struct Estado {
+    char nome[30];
+};
+
+struct Cidade {
+    char nome[30];
+    struct Estado est;
+};
+
+struct Endereco {
+    char rua[30], bairro[30];
+    struct Cidade cid;
+};
+
+struct Pessoa {
+    char nome[40];
+    int idade;
+    struct Endereco end;    
+};
+
 main() {
-    int *p;
-    int i;
+    struct Pessoa *pes;
 
-    p = malloc(20);
+    pes = (struct Pessoa *) malloc(sizeof(struct Pessoa));
 
-    p[0] = 10;
-    p[1] = 20;
-    p[2] = 30;
-    p[3] = 40;
-    p[4] = 50;
+    printf("Entre com um nome: ");
+    scanf("%s", pes->nome);
 
-    for(i=0;i<5;i++) {
-       printf("%d\n", p[i]);
-    }
-    
-    free(p);
+    printf("Entre com idade: ");
+    scanf("%d", &pes->idade);
 
+    printf("Rua: ");
+    scanf("%s", pes->end.rua);
+
+    printf("Bairro: ");
+    scanf("%s", pes->end.bairro);
+
+    printf("Cidade: ");
+    scanf("%s", pes->end.cid.nome);
+
+    printf("Estado: ");
+    scanf("%s", pes->end.cid.est.nome);
+
+    printf("%s\n%d\n", pes->nome, pes->idade);
+    printf("%s\n%s\n", pes->end.rua, pes->end.bairro);
+    printf("%s\n%s\n", pes->end.cid.nome, pes->end.cid.est.nome);
+
+    free(pes);
 }

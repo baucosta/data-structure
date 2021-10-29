@@ -5,7 +5,7 @@ main() {
     int *p, op=0, qtde = 0;
 
     while(op != 1) {
-        p = realloc(p, sizeof(int) * (qtde + 1));
+        p = (int *) realloc(p, sizeof(int) * (qtde + 1));
 
         printf("valor: ");
         scanf("%d", &p[qtde]);
