@@ -13,15 +13,6 @@ struct No {
 };
 typedef struct No *pno;
 
-int menu() {
-    int op;
-    printf("1.Inserir\n2.Listar\3.Sair\n\n");
-    printf("Digite uma opcao: ");
-    scanf("%d", &op);
-
-    return op;
-}
-
 pno alocar() {
     return (malloc(sizeof(struct No)));
 }
@@ -31,22 +22,63 @@ void inicializar(pno *i, pno *f) {
     *f = NULL;
 }
 
+void inserir(pno *i, pno *f) {
+    pno aux;
+
+    aux = alocar();
+    
+    printf("Nome: ");
+    __fpurge(stdin);
+    gets(aux->pes.nome);
+    printf("Endereco: ");
+    __fpurge(stdin);
+    gets(aux->pes.end);
+    printf("Idade: ");
+    scanf("%d", &aux->pes.idade);
+
+    if(*i == NULL) {
+        *i = aux;
+        *f = aux;
+        (*f)->prox = NULL;
+    } else {
+       (*f)->prox = aux;
+       *f = aux;
+       (*f)->prox = NULL;
+    }
+
+}
+
+void listar(pno aux) {
+    if(aux == NULL) {
+        printf("The list is empty\n\n");
+    } else {
+        while(aux != NULL) {
+            printf("%s\n%s\n%d\n\n", (aux)->pes.nome, (aux)->pes.end, (aux)->pes.idade);
+            aux = aux->prox;
+        }
+    }
+}
+
 main() {
     int op;
     pno inicio, fim;
+    
 
     inicializar(&inicio, &fim);
 
+
     do {
-        op = menu();
+        printf("1.Inserir\n2.Listar\n3.Sair\n\n");
+        printf("Digite uma opcao: ");
+        scanf("%d", &op);
 
         switch(op) {
             case 1:
-            printf("inserir");
+                inserir(&inicio, &fim);
             break;
 
             case 2:
-            printf("listar");
+                listar(inicio);
             break;
 
             case 3:
