@@ -17,6 +17,13 @@ pno alocar() {
     return (malloc(sizeof(struct No)));
 }
 
+int vazia(pno inicio) {
+    if (inicio == NULL)
+        return 1;
+
+    return 0;
+}
+
 void inicializar(pno *i, pno *f) {
     *i = NULL;
     *f = NULL;
@@ -36,7 +43,7 @@ void inserir(pno *i, pno *f) {
     printf("Idade: ");
     scanf("%d", &aux->pes.idade);
 
-    if(*i == NULL) {
+    if(vazia(*i)) {
         *i = aux;
         *f = aux;
         (*f)->prox = NULL;
@@ -49,7 +56,7 @@ void inserir(pno *i, pno *f) {
 }
 
 void listar(pno aux) {
-    if(aux == NULL) {
+    if(vazia(aux)) {
         printf("The list is empty\n\n");
     } else {
         while(aux != NULL) {
@@ -59,16 +66,34 @@ void listar(pno aux) {
     }
 }
 
+void pesquisar(pno aux, char nome[30]) {
+    int found = 0;
+
+    while(aux != NULL) {
+        if (strcmp(aux->pes.nome, nome) == 0) {
+            printf("%s\n%s\n%d\n\n", aux->pes.nome, aux->pes.end, aux->pes.idade);
+            found = 1;
+        }
+        aux = aux->prox;
+    }
+
+    if (found == 0) {
+        printf("Nome nao encontrado\n\n");
+    }
+    
+}
+
 main() {
     int op;
     pno inicio, fim;
+    char pesq[30];
     
 
     inicializar(&inicio, &fim);
 
 
     do {
-        printf("1.Inserir\n2.Listar\n3.Sair\n\n");
+        printf("1.Inserir\n2.Listar\n3.Pesquisar\n4.Sair\n\n");
         printf("Digite uma opcao: ");
         scanf("%d", &op);
 
@@ -82,12 +107,25 @@ main() {
             break;
 
             case 3:
-            printf("saindo...\n\n");
+            if(vazia(inicio)) {
+                printf("The list is empty\n\n");
+            } else {
+                printf("Nome a pesquisar: ");
+                __fpurge(stdin);
+                gets(pesq);
+
+                pesquisar(inicio, pesq);
+            }
+        
+            break;
+
+            case 4:
+                printf("saindo...\n\n");
             break;
 
             default:
-            printf("opcao invalida");
+                printf("opcao invalida");
         }
 
-    } while(op!=3);
+    } while(op!=4);
 }
