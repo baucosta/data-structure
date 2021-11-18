@@ -83,6 +83,42 @@ void pesquisar(pno aux, char nome[30]) {
     
 }
 
+void removerDoInicio(pno *i, pno *f) {
+    pno aux;
+
+    aux = *i;
+    (*i) = (*i)->prox;
+    free(aux);
+
+    printf("Exclusao efetuada");
+}
+
+void removerDoFim(pno *i, pno *f) {
+    pno aux, ant;
+
+    aux = *i;
+    ant = NULL;
+
+    // para quando tem-se somente um no na lista
+    if (aux->prox == NULL) {
+        *i = NULL;
+        *f = NULL;
+        free(aux);
+    } else {
+        while(aux != NULL) {
+            if (aux == *f) {
+                free(*f);
+                *f = ant;
+                (*f)->prox = NULL;
+            } else{
+                ant = aux;
+                aux = aux->prox;
+            }
+        }
+    }
+
+}
+
 main() {
     int op;
     pno inicio, fim;
@@ -93,7 +129,8 @@ main() {
 
 
     do {
-        printf("1.Inserir\n2.Listar\n3.Pesquisar\n4.Sair\n\n");
+        printf("1.Inserir\n2.Listar\n3.Pesquisar\n4.Remover do inicio\n");
+        printf("5.Remover do Fim\n6.Remover elemento\n7.Sair\n\n");
         printf("Digite uma opcao: ");
         scanf("%d", &op);
 
@@ -120,6 +157,22 @@ main() {
             break;
 
             case 4:
+                if(vazia(inicio)) {
+                    printf("The list is empty\n\n");
+                } else {
+                    removerDoInicio(&inicio, &fim);
+                }
+            break;
+
+             case 5:
+                if(vazia(inicio)) {
+                    printf("The list is empty\n\n");
+                } else {
+                    removerDoFim(&inicio, &fim);
+                }
+            break;
+
+            case 7:
                 printf("saindo...\n\n");
             break;
 
@@ -127,5 +180,5 @@ main() {
                 printf("opcao invalida");
         }
 
-    } while(op!=4);
+    } while(op!=7);
 }
