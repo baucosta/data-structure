@@ -119,6 +119,31 @@ void removerDoFim(pno *i, pno *f) {
 
 }
 
+void removerNo(pno *i, pno *f, char nome[30]) {
+    pno aux, ant;
+
+    ant = NULL;
+    aux = *i;
+
+    while(aux != NULL) {
+        if (strcmp(aux->pes.nome, nome) == 0) {
+            aux = aux->prox;
+            if (ant == NULL) {
+                free(*i);
+                *i = aux;
+            } else {
+                free(ant->prox);
+                ant->prox = aux;
+            }
+        } else {
+            ant = aux;
+            aux = aux->prox;
+        }
+    }
+
+
+}
+
 main() {
     int op;
     pno inicio, fim;
@@ -169,6 +194,18 @@ main() {
                     printf("The list is empty\n\n");
                 } else {
                     removerDoFim(&inicio, &fim);
+                }
+            break;
+
+            case 6:
+                printf("Nome a remover: ");
+                __fpurge(stdin);
+                gets(pesq);
+
+                if(vazia(inicio)) {
+                    printf("The list is empty\n\n");
+                } else {
+                    removerNo(&inicio, &fim, pesq);
                 }
             break;
 
