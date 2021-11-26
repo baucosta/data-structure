@@ -43,14 +43,13 @@ void inserir(pno *i, pno *f) {
     printf("Idade: ");
     scanf("%d", &aux->pes.idade);
 
+    (*f)->prox = NULL;
     if(vazia(*i)) {
         *i = aux;
         *f = aux;
-        (*f)->prox = NULL;
     } else {
        (*f)->prox = aux;
        *f = aux;
-       (*f)->prox = NULL;
     }
 
 }
